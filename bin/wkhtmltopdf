@@ -1,10 +1,16 @@
 #!/usr/bin/env ruby
 
-case RUBY_PLATFORM
-  when /64.*linux/
-    filename = "wkhtmltopdf_linux_amd64"
+require 'pathname'
+require 'rbconfig'
+
+case RbConfig::CONFIG['host_os']
   when /linux/
-    filename = "wkhtmltopdf_linux_i386"
+    case RbConfig::CONFIG['host_cpu']
+      when /64/
+        filename = "wkhtmltopdf_linux_amd64"
+      else
+        filename = "wkhtmltopdf_linux_i386"
+    end
   when /darwin/
     filename = "wkhtmltopdf_macosx"
   else
